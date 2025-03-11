@@ -76,10 +76,3 @@ $$
 ## Herramientas y Tecnologías
 
 - **Lenguaje:** C++
-- **Librerías Estándar:**
-  - `<iostream>` para entrada/salida.
-  - `<thread>` y `<mutex>` para la paralelización y sincronización.
-  - `<random>` para la generación de números aleatorios.
-  - `<atomic>` para la gestión segura de contadores compartidos.
-  - `<chrono>` para medir tiempos de ejecución.
-- **Compilador:** C++11 o superior (por ejemplo, g++ o clang++).
