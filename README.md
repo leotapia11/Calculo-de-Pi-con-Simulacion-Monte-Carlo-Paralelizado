@@ -32,7 +32,7 @@ $$
 \frac{\pi}{4} \approx \frac{N_{\text{dentro}}}{N_{\text{total}}}
 $$
 
-donde \( N_{\text{dentro}} \) es el número de puntos que caen dentro del círculo y \( N_{\text{total}} \) es el número total de puntos generados. Finalmente, la estimación de Pi se obtiene como:
+donde $\( N_{\text{dentro}} \)$ es el número de puntos que caen dentro del círculo y $\( N_{\text{total}} \)$ es el número total de puntos generados. Finalmente, la estimación de Pi se obtiene como:
 
 $$
 \pi \approx 4 \times \frac{N_{\text{dentro}}}{N_{\text{total}}}
