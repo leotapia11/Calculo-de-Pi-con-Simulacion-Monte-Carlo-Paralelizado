@@ -12,7 +12,7 @@ El método de Monte Carlo para calcular Pi se basa en el siguiente razonamiento:
 - Se considera un cuadrado de lado 2 centrado en el origen, por ejemplo, extendiéndose de -1 a 1 en ambos ejes.
 - Dentro de este cuadrado se puede inscribir un círculo de radio 1.
 - Si se generan puntos aleatorios en el cuadrado, la fracción de puntos que caen dentro del círculo es proporcional a la relación entre el área del círculo y el área del cuadrado.
-- El área del círculo es \(\pi \times r^2\) (con \(r = 1\), simplemente \(\pi\)) y el área del cuadrado es \(4\).
+- El área del círculo es $\(\pi \times r^2\) (con \(r = 1\), simplemente \(\pi\)) y el área del cuadrado es \(4\)$.
 - Por lo tanto, la relación es:
   \[
   \frac{\pi}{4} \approx \frac{N_{\text{dentro}}}{N_{\text{total}}}
