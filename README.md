@@ -5,6 +5,24 @@ Este proyecto estima el valor de Pi utilizando el método de Monte Carlo y técn
 
 ## ¿Qué vamos a hacer?
 
+### Concepto Básico
+
+El método de Monte Carlo para calcular Pi se basa en el siguiente razonamiento:
+
+- Se considera un cuadrado de lado 2 centrado en el origen, por ejemplo, extendiéndose de -1 a 1 en ambos ejes.
+- Dentro de este cuadrado se puede inscribir un círculo de radio 1.
+- Si se generan puntos aleatorios en el cuadrado, la fracción de puntos que caen dentro del círculo es proporcional a la relación entre el área del círculo y el área del cuadrado.
+- El área del círculo es \(\pi \times r^2\) (con \(r = 1\), simplemente \(\pi\)) y el área del cuadrado es \(4\).
+- Por lo tanto, la relación es:
+  \[
+  \frac{\pi}{4} \approx \frac{N_{\text{dentro}}}{N_{\text{total}}}
+  \]
+  donde \(N_{\text{dentro}}\) es el número de puntos que caen dentro del círculo y \(N_{\text{total}}\) es el número total de puntos generados.
+- De esta forma, la estimación de Pi se obtiene como:
+  \[
+  \pi \approx 4 \times \frac{N_{\text{dentro}}}{N_{\text{total}}}
+  \]
+
 - **Generación de Puntos Aleatorios:** Cada hilo se encargará de generar y evaluar una parte del total de puntos.
 - **Evaluación de Puntos:** Determinar si cada punto se encuentra dentro del círculo inscrito en el cuadrado.
 - **Estimación de Pi:** Combinar los resultados de todos los hilos para calcular una estimación global del valor de Pi.
