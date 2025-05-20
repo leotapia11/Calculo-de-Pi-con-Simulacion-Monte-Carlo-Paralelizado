@@ -1,78 +1,78 @@
-# Cálculo de Pi con Simulación Monte Carlo Paralelizado
+# Parallel Monte Carlo Simulation for Estimating Pi
 
-## Descripción
+## Description
 
-Este proyecto estima el valor de Pi utilizando el método de Monte Carlo y técnicas de paralelización en C++. La idea central es generar una gran cantidad de puntos aleatorios dentro de un cuadrado que contiene un círculo inscrito y, mediante la proporción de puntos que caen dentro del círculo, aproximar el valor de Pi. Al paralelizar la simulación, se aprovechan múltiples núcleos de la CPU, lo que permite evaluar muchos más puntos en menos tiempo y obtener una estimación más precisa.
+This project estimates the value of Pi using the Monte Carlo method combined with parallel computing techniques in C. The main idea is to generate a large number of random points inside a square containing an inscribed circle, and then approximate Pi based on the proportion of points that fall inside the circle. By parallelizing this simulation, multiple CPU cores are utilized, allowing for the evaluation of significantly more points in less time, thus achieving a more precise estimation.
 
-## ¿De Qué Trata el Proyecto?
+## Project Overview
 
-### Concepto Básico
+### Fundamental Concept
 
-El método de Monte Carlo para calcular Pi se basa en el siguiente razonamiento:
+The Monte Carlo method for calculating Pi is based on the following logic:
 
-- Se considera un cuadrado de lado 2 centrado en el origen, extendiéndose de -1 a 1 en ambos ejes.
-- Dentro de este cuadrado se inscribe un círculo de radio 1.
-- Si se generan puntos aleatorios en el cuadrado, la fracción de puntos que caen dentro del círculo es proporcional a la relación entre el área del círculo y el área del cuadrado.
+- Consider a square of side length 2, centered at the origin, extending from -1 to 1 along both axes.
+- A circle with a radius of 1 is inscribed within this square.
+- By generating random points within the square, the fraction of points that land inside the circle is proportional to the ratio of the circle’s area to the square’s area.
 
-El área del círculo es:
-
-$$
-\text{Área}_{\text{círculo}} = \pi \times 1^2 = \pi
-$$
-
-y el área del cuadrado es:
+The area of the circle is:
 
 $$
-\text{Área}_{\text{cuadrado}} = 2 \times 2 = 4
+\text{Area}_{\text{circle}} = \pi \times 1^2 = \pi
 $$
 
-Por lo tanto, la relación entre ambos es:
+and the area of the square is:
 
 $$
-\frac{\pi}{4} \approx \frac{N_{\text{dentro}}}{N_{\text{total}}}
+\text{Area}_{\text{square}} = 2 \times 2 = 4
 $$
 
-donde $\( N_{\text{dentro}} \)$ es el número de puntos que caen dentro del círculo y $\( N_{\text{total}} \)$ es el número total de puntos generados. Finalmente, la estimación de Pi se obtiene como:
+Therefore, the relationship between them is:
 
 $$
-\pi \approx 4 \times \frac{N_{\text{dentro}}}{N_{\text{total}}}
+\frac{\pi}{4} \approx \frac{N_{\text{inside}}}{N_{\text{total}}}
 $$
 
-### ¿Qué Vamos a Hacer?
+where \( N_{\text{inside}} \) is the number of points inside the circle, and \( N_{\text{total}} \) is the total number of generated points. Thus, Pi can be estimated as follows:
 
-- **Generación de Puntos Aleatorios:**  
-  Se generarán puntos en el rango \([-1, 1]\) para ambos ejes.
+$$
+\pi \approx 4 \times \frac{N_{\text{inside}}}{N_{\text{total}}}
+$$
 
-- **Evaluación de Puntos:**  
-  Cada punto se evaluará para determinar si cae dentro del círculo usando la condición:
+### What We Will Do
+
+- **Random Point Generation:**  
+  Points will be generated within the range \([-1, 1]\) for both axes.
+
+- **Point Evaluation:**  
+  Each generated point will be evaluated to determine if it lies inside the circle using the condition:
 
   $$
   x^2 + y^2 \leq 1
   $$
 
-- **Distribución del Trabajo en Paralelo:**  
-  Se dividirá la tarea entre varios hilos. Cada hilo procesará un subconjunto del total de puntos y contará los puntos que caen dentro del círculo. Luego se combinarán estos resultados.
+- **Parallel Work Distribution:**  
+  The task will be divided among multiple threads. Each thread processes a subset of the total points, counting those that fall inside the circle. Afterwards, these results are combined.
 
-- **Cálculo Final de Pi:**  
-  Se aplicará la fórmula:
+- **Final Calculation of Pi:**  
+  Using the formula:
 
   $$
-  \pi \approx 4 \times \frac{N_{\text{dentro}}}{N_{\text{total}}}
+  \pi \approx 4 \times \frac{N_{\text{inside}}}{N_{\text{total}}}
   $$
 
-  para obtener la estimación global de Pi.
+  we obtain the global Pi estimation.
 
-## ¿Por Qué Paralelizarlo es Mejor?
+## Why Parallelization Is Beneficial
 
-- **Reducción del Tiempo de Ejecución:**  
-  La paralelización permite evaluar muchos puntos de forma concurrente, reduciendo significativamente el tiempo total de cómputo.
+- **Reduced Execution Time:**  
+  Parallelization allows many points to be evaluated concurrently, significantly decreasing overall computation time.
 
-- **Aprovechamiento de Múltiples Núcleos:**  
-  Las CPUs modernas tienen múltiples núcleos, y la solución paralela permite utilizar todos estos recursos para incrementar el rendimiento.
+- **Utilization of Multi-core CPUs:**  
+  Modern CPUs contain multiple cores. The parallel solution exploits these resources, greatly enhancing performance.
 
-- **Escalabilidad y Precisión:**  
-  Procesar un mayor número de puntos en menos tiempo mejora la precisión de la estimación sin comprometer el rendimiento, lo que es ideal para simulaciones que requieren evaluar millones de puntos.
+- **Scalability and Precision:**  
+  Evaluating more points in less time improves estimation accuracy without sacrificing performance, ideal for simulations requiring millions of points.
 
-## Herramientas y Tecnologías
+## Tools and Technologies
 
-- **Lenguaje:** C
+- **Language:** C
