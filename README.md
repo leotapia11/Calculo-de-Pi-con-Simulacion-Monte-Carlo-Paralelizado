@@ -75,4 +75,4 @@ $$
 
 ## Herramientas y Tecnologías
 
-- **Lenguaje:** C++
+- **Lenguaje:** C
