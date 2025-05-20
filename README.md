@@ -47,7 +47,7 @@ $$
   Each generated point will be evaluated to determine if it lies inside the circle using the condition:
 
   $$
-  x^2 + y^2 \leqslant 1
+  x^2 + y^2
   $$
 
 - **Parallel Work Distribution:**  
