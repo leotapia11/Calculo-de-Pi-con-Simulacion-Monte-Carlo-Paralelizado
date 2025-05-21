@@ -1,78 +1,115 @@
 # Parallel Monte Carlo Simulation for Estimating Pi
 
-## Description
+## Author and Contact
 
-This project estimates the value of Pi using the Monte Carlo method combined with parallel computing techniques in C. The main idea is to generate a large number of random points inside a square containing an inscribed circle, and then approximate Pi based on the proportion of points that fall inside the circle. By parallelizing this simulation, multiple CPU cores are utilized, allowing for the evaluation of significantly more points in less time, thus achieving a more precise estimation.
+Leo Tapia  
+[leoatapia309@gmail.com]
 
-## Project Overview
+## License
 
-### Fundamental Concept
+GNU General Public License v3.0
 
-The Monte Carlo method for calculating Pi is based on the following logic:
+## Affiliation
 
-- Consider a square of side length 2, centered at the origin, extending from -1 to 1 along both axes.
-- A circle with a radius of 1 is inscribed within this square.
-- By generating random points within the square, the fraction of points that land inside the circle is proportional to the ratio of the circle’s area to the square’s area.
+Final project for the High-Performance Computing (Supercomputing) 2025-2 class, designed and developed at the National Autonomous University of Mexico (UNAM), The tests were performed in the Interdisciplinary Laboratory of Scientific Computing.
 
-The area of the circle is:
+---
 
-$$
-\text{Area}_{\text{circle}} = \pi \times 1^2 = \pi
-$$
+## Introduction
 
-and the area of the square is:
+Estimating the mathematical constant Pi (π) using the Monte Carlo method is a classic example of stochastic simulation in scientific computing. The method involves generating random points within a square and determining the proportion that fall inside an inscribed circle. This ratio can be used to approximate the value of Pi.
 
-$$
-\text{Area}_{\text{square}} = 2 \times 2 = 4
-$$
+As the required number of points grows for higher accuracy, computation time becomes a limiting factor. By leveraging High-Performance Computing (HPC) and parallel programming, it is possible to significantly reduce execution times, making this method practical for large-scale simulations and for illustrating the benefits of parallelization in scientific problems.
 
-Therefore, the relationship between them is:
+---
 
-$$
-\frac{\pi}{4} \approx \frac{N_{\text{inside}}}{N_{\text{total}}}
-$$
+## Justification
 
-where \( N_{\text{inside}} \) is the number of points inside the circle, and \( N_{\text{total}} \) is the total number of generated points. Thus, Pi can be estimated as follows:
+Simulations based on random sampling, such as Monte Carlo, are widely used in areas from physics to finance. However, high-precision estimations require evaluating millions or billions of points, quickly turning into a computationally expensive task.
 
-$$
-\pi \approx 4 \times \frac{N_{\text{inside}}}{N_{\text{total}}}
-$$
+Modern multi-core CPUs can evaluate these points in parallel, accelerating convergence and reducing wall time. This project aims to demonstrate the power and practical benefit of parallel computing using the Monte Carlo estimation of Pi as a didactic and illustrative example.
 
-### What We Will Do
+---
 
-- **Random Point Generation:**  
-  Points will be generated within the range \([-1, 1]\) for both axes.
+## Hypothesis
 
-- **Point Evaluation:**  
-  Each generated point will be evaluated to determine if it lies inside the circle using the condition:
+A significant reduction in simulation time for estimating Pi can be achieved by parallelizing the Monte Carlo algorithm with multithreading or distributed computing, compared to its sequential execution.
 
-  $$
-  x^2 + y^2
-  $$
+---
 
-- **Parallel Work Distribution:**  
-  The task will be divided among multiple threads. Each thread processes a subset of the total points, counting those that fall inside the circle. Afterwards, these results are combined.
+## General Objective
 
-- **Final Calculation of Pi:**  
-  Using the formula:
+Implement a parallel algorithm using the Monte Carlo method to estimate Pi, leveraging high-performance computing techniques to efficiently utilize multi-core architectures.
 
-  $$
-  \pi \approx 4 \times \frac{N_{\text{inside}}}{N_{\text{total}}}
-  $$
+---
 
-  we obtain the global Pi estimation.
+## Particular Objectives
 
-## Why Parallelization Is Beneficial
+- Develop a correct and efficient sequential implementation of the Monte Carlo simulation for Pi estimation.
+- Implement the parallel version using multithreading.
+- Measure and compare the performance (execution time and scalability) between the sequential and parallel implementations.
+- Analyze the trade-off between number of points, accuracy, and computation time.
 
-- **Reduced Execution Time:**  
-  Parallelization allows many points to be evaluated concurrently, significantly decreasing overall computation time.
+---
 
-- **Utilization of Multi-core CPUs:**  
-  Modern CPUs contain multiple cores. The parallel solution exploits these resources, greatly enhancing performance.
+## Toolset
 
-- **Scalability and Precision:**  
-  Evaluating more points in less time improves estimation accuracy without sacrificing performance, ideal for simulations requiring millions of points.
+- **Programming language:** C   
+- **Testing environment:** Interdisciplinary Laboratory of Scientific Computing, ENES Morelia (UNAM)
 
-## Tools and Technologies
+---
 
-- **Language:** C
+## Algorithm Methodology
+
+The simulation follows these steps:
+
+1. **Random Point Generation:**  
+   Each point is generated within the interval \([-1, 1]\) for both the \(x\) and \(y\) axes.
+
+2. **Point Evaluation:**  
+   A point \((x, y)\) is considered inside the circle if:
+
+   $$
+   x^2 + y^2 \leq 1
+   $$
+
+3. **Parallel Work Distribution:**  
+   The total number of points is divided among available threads.  
+   Each thread independently counts the number of points that fall inside the circle.
+
+4. **Result Aggregation:**  
+   After all threads complete, their local counts are summed to compute the global number of points inside the circle.
+
+5. **Final Calculation:**  
+   The value of π is estimated using the formula:
+
+π ≈ 4 × (N_inside / N_total)
+
+where:
+- N_inside: Number of points inside the circle
+- N_total: Total number of generated points
+
+---
+
+## Parallelization
+
+- **Parallel Model:**  
+  Each thread operates independently on a subset of points.  
+  This is considered an _embarrassingly parallel_ problem.
+
+- **Synchronization:**   
+  Required only once at the end of the simulation, when combining the values of N_inside (the number of points inside the circle) calculated independently by each thread.
+
+
+- **Scalability:**  
+  The algorithm scales nearly linearly with the number of CPU cores.  
+  As more cores are used, execution time decreases significantly, allowing for the simulation of more points in less time.
+
+---
+
+## References
+
+- [Monte Carlo Method — Wikipedia](https://en.wikipedia.org/wiki/Monte_Carlo_method)  
+- [Parallel Programming with OpenMP — LLNL](https://computing.llnl.gov/tutorials/openMP/)  
+
+
