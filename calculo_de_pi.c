@@ -2,7 +2,7 @@
 #include <random>
 
 int main() {
-    const unsigned long long totalPoints = 10000000ULL;
+    const unsigned long long totalPoints = 500000000ULL;
     unsigned long long countInside = 0;
 
 
