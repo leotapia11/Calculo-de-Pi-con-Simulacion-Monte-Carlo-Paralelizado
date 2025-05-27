@@ -134,9 +134,12 @@ where:
 ![Heatmap de error de π](img/heatmap_error_pi.png)
 
 
-## References
+## Referencias
 
-- [Monte Carlo Method — Wikipedia](https://en.wikipedia.org/wiki/Monte_Carlo_method)  
-- [Parallel Programming with OpenMP — LLNL](https://computing.llnl.gov/tutorials/openMP/)  
+1.	**Monte Carlo Method.** Wikipedia. Disponible en: https://en.wikipedia.org/wiki/Monte_Carlo_method (consultado el 27 Mayo 2025).  
+2.	B. Chapman y R. Hundt, _OpenMP: Parallel Programming in C/C++ and Fortran_, 2ª ed., Morgan Kaufmann, 2008.  
+3.	Lawrence Livermore National Laboratory, “Parallel Programming with OpenMP,” LLNL Tutorial, 2017. Disponible en: https://computing.llnl.gov/tutorials/openMP/ (consultado el 27 Mayo 2025).  
+4.	M. Matsumoto y T. Nishimura, “Mersenne Twister: A 623-dimensionally Equidistributed Uniform Pseudo-random Number Generator,” _ACM Trans. Modeling and Computer Simulation_, vol. 8, no. 1, pp. 3–30, 1998.  
+5.	“C++ Reference: `<random>`,” cppreference.com. Disponible en: https://en.cppreference.com/w/cpp/numeric/random (consultado el 27 Mayo 2025).
 
 
