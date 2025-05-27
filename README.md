@@ -109,7 +109,6 @@ where:
 
 ## Resultados
 
-
 ### Rendimiento secuencial
 ![Gráfica tiempo vs puntos (secuencial)](img/Captura_de_pantalla2.png)
 
@@ -118,6 +117,8 @@ where:
 
 ### Gráfica de precisión de π
 ![Precisión de la estimación de π](img/error_pi.png)
+
+## Rendimiento Paralelo
 
 
 ### Tabla Paralela (10⁷ – 10¹⁰ puntos)
