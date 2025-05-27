@@ -110,10 +110,8 @@ where:
 ## Resultados
 ## Capturas de resultados
 
-### Tabla de tiempos secuencial
-![Tabla de resultados secuencial](img/Captura_de_pantalla1.png)
 
-### Rendimiento secuencial vs paralelo
+### Rendimiento secuencial
 ![Gráfica tiempo vs puntos (secuencial)](img/Captura_de_pantalla2.png)
 
 ### Estimación de π (secuencial)
