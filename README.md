@@ -120,8 +120,8 @@ where:
 ![Precisión de la estimación de π](img/error_pi.png)
 
 
-### Tabla secuencial (10⁷ – 10¹⁰ puntos)
-<img src="img/secuencial_dataframe.png" alt="Resultados secuenciales" width="600"/>
+### Tabla Paralela (10⁷ – 10¹⁰ puntos)
+<img src="img/parallel_dataframe.png" alt="Resultados secuenciales" width="600"/>
 
 ### Rendimiento
 | Métrica | Descripción | Imagen |
