@@ -108,7 +108,6 @@ where:
 ---
 
 ## Resultados
-## Capturas de resultados
 
 
 ### Rendimiento secuencial
