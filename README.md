@@ -108,6 +108,20 @@ where:
 ---
 
 ## Resultados
+## Capturas de resultados
+
+### Tabla de tiempos secuencial
+![Tabla de resultados secuencial](img/Captura_de_pantalla_2025-05-27_110521.png)
+
+### Rendimiento secuencial vs paralelo
+![Gráfica tiempo vs puntos (secuencial)](img/Captura_de_pantalla_2025-05-27_110530.png)
+
+### Estimación de π (secuencial)
+![Estimación de π vs puntos (secuencial)](img/Captura_de_pantalla_2025-05-27_110544.png)
+
+### Gráfica de precisión de π
+![Precisión de la estimación de π](img/error_pi.png)
+
 
 ### Tabla secuencial (10⁷ – 10¹⁰ puntos)
 <img src="img/secuencial_dataframe.png" alt="Resultados secuenciales" width="600"/>
