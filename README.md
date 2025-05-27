@@ -115,8 +115,6 @@ where:
 ### Estimación de π (secuencial)
 ![Estimación de π vs puntos (secuencial)](img/Captura_de_pantalla3.png)
 
-### Gráfica de precisión de π
-![Precisión de la estimación de π](img/error_pi.png)
 
 ## Rendimiento Paralelo
 
