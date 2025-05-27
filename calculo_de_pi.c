@@ -1,65 +1,46 @@
-#include <iostream>
-#include <random>
-#include <chrono>
-#include <fstream>
-#include <vector>
-#include <iomanip>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
 
-int main() {
-    // 1) Lista de experimentos (igual que tu points_list en Python)
-    std::vector<unsigned long long> points_list = {
-        10'000'000ULL, 20'000'000ULL, 50'000'000ULL,
-        100'000'000ULL, 200'000'000ULL, 500'000'000ULL,
-        1'000'000'000ULL, 5'000'000'000ULL, 10'000'000'000ULL
+int main(void) {
+    unsigned long long points_list[] = {
+        10000000ULL, 20000000ULL, 50000000ULL,
+        100000000ULL, 200000000ULL, 500000000ULL,
+        1000000000ULL, 5000000000ULL, 10000000000ULL
     };
+    size_t n_experiments = sizeof(points_list) / sizeof(points_list[0]);
 
-    // 2) Abrimos el fichero CSV y escribimos cabecera
-    std::ofstream csv("resultados_secuencial.csv");
+    FILE *csv = fopen("resultados_secuencial.csv", "w");
     if (!csv) {
-        std::cerr << "Error al crear resultados_secuencial.csv\n";
+        fprintf(stderr, "Error al crear resultados_secuencial.csv\n");
         return 1;
     }
-    csv << "total_points,pi_estimate,time_seconds\n";
+    fprintf(csv, "total_points,pi_estimate,time_seconds\n");
 
-    // 3) Inicializamos el motor de números aleatorios (Mersenne Twister)
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<double> dist(-1.0, 1.0);
+    srand((unsigned)time(NULL));
 
-    // 4) Para cada experimento:
-    for (auto totalPoints : points_list) {
+    for (size_t i = 0; i < n_experiments; ++i) {
+        unsigned long long totalPoints = points_list[i];
         unsigned long long countInside = 0;
 
-        // Arrancamos el cronómetro
-        auto t0 = std::chrono::high_resolution_clock::now();
+        clock_t t0 = clock();
 
-        // Tiramos los “dardos”
-        for (unsigned long long i = 0; i < totalPoints; ++i) {
-            double x = dist(gen);
-            double y = dist(gen);
+        for (unsigned long long j = 0; j < totalPoints; ++j) {
+            double x = (double)rand() / RAND_MAX * 2.0 - 1.0;
+            double y = (double)rand() / RAND_MAX * 2.0 - 1.0;
             if (x*x + y*y <= 1.0)
                 ++countInside;
         }
 
-        // Detenemos el cronómetro
-        auto t1 = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed = t1 - t0;
+        clock_t t1 = clock();
+        double elapsed = (double)(t1 - t0) / CLOCKS_PER_SEC;
+        double piEstimate = 4.0 * (double)countInside / (double)totalPoints;
 
-        // Estimación de pi
-        double piEstimate = 4.0 * double(countInside) / double(totalPoints);
-
-        // 5) Escribimos línea en el CSV
-        csv
-            << totalPoints << ','
-            << std::setprecision(10) << piEstimate << ','
-            << elapsed.count() << "\n";
-
-        // Opcional: feedback por pantalla
-        std::cout << "Hecho: " << totalPoints
-                  << " puntos → π≈" << piEstimate
-                  << " en " << elapsed.count() << "s\n";
+        fprintf(csv, "%llu,%.10f,%.6f\n", totalPoints, piEstimate, elapsed);
+        printf("Hecho: %llu puntos → π≈%.10f en %.6f s\n", totalPoints, piEstimate, elapsed);
     }
 
-    csv.close();
+    fclose(csv);
     return 0;
 }
