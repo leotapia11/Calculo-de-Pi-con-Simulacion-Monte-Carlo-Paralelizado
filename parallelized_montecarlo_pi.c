@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>   /* uint64_t */
-#include <time.h>     /* time()   */
-#include <mpi.h>      /* MPI      */
+#include <stdint.h>  
+#include <time.h>    
+#include <mpi.h>      
 
-/* Diferencia de tiempos en segundos */
+
 static inline double elapsed_sec(double t0, double t1) { return t1 - t0; }
 
 int main(int argc, char **argv)
@@ -15,7 +15,6 @@ int main(int argc, char **argv)
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-    /* Tamaños de muestra que probaremos */
     const uint64_t totals[] = {
         10000000ULL,
         20000000ULL,
@@ -46,10 +45,10 @@ int main(int argc, char **argv)
         /* Semilla distinta por proceso (suma constante para reproducibilidad) */
         unsigned int seed = (unsigned int)(123456789u + time(NULL) + (rank << 16));
 
-        MPI_Barrier(MPI_COMM_WORLD);          /* Sincronizar todos */
+        MPI_Barrier(MPI_COMM_WORLD);          /
         double t0 = MPI_Wtime();
 
-        /* Cálculo Monte Carlo */
+
         uint64_t local_inside = 0;
         for (uint64_t i = 0; i < local_points; ++i) {
             double x = (double)rand_r(&seed) / RAND_MAX * 2.0 - 1.0;
@@ -58,14 +57,14 @@ int main(int argc, char **argv)
                 ++local_inside;
         }
 
-        /* Reducir conteos en el proceso 0 */
+
         uint64_t total_inside = 0;
         MPI_Reduce(&local_inside, &total_inside, 1,
                    MPI_UNSIGNED_LONG_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
 
         double secs = elapsed_sec(t0, MPI_Wtime());
 
-        /* Solo el maestro imprime resultados */
+
         if (rank == 0) {
             double pi_est = 4.0 * (double)total_inside / (double)total;
             printf("%d,%llu,%.10f,%.6f\n",
