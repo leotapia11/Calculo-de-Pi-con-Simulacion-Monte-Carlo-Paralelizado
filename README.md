@@ -111,13 +111,13 @@ where:
 ## Capturas de resultados
 
 ### Tabla de tiempos secuencial
-![Tabla de resultados secuencial](img/Captura_de_pantalla_2025-05-27_110521.png)
+![Tabla de resultados secuencial](img/Captura_de_pantalla1.png)
 
 ### Rendimiento secuencial vs paralelo
-![Gráfica tiempo vs puntos (secuencial)](img/Captura_de_pantalla_2025-05-27_110530.png)
+![Gráfica tiempo vs puntos (secuencial)](img/Captura_de_pantalla2.png)
 
 ### Estimación de π (secuencial)
-![Estimación de π vs puntos (secuencial)](img/Captura_de_pantalla_2025-05-27_110544.png)
+![Estimación de π vs puntos (secuencial)](img/Captura_de_pantalla_3.png)
 
 ### Gráfica de precisión de π
 ![Precisión de la estimación de π](img/error_pi.png)
