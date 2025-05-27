@@ -127,7 +127,6 @@ where:
 |---------|-------------|--------|
 | **Tiempo vs Puntos** | Escalabilidad fuerte al incrementar el tamaño de la muestra. | ![Tiempo vs puntos](img/tiempo_vs_puntos.png) |
 | **Speed-up** | Aceleración lograda respecto a la versión secuencial para 2-24 procesos. | ![Speed-up](img/speedup.png) |
-| **Precisión** | Error absoluto de la estimación de π frente a la referencia. | ![Error de π](img/error_pi.png) |
 
 ### Error de π en función de procesos y puntos
 
