@@ -117,7 +117,7 @@ where:
 ![Gráfica tiempo vs puntos (secuencial)](img/Captura_de_pantalla2.png)
 
 ### Estimación de π (secuencial)
-![Estimación de π vs puntos (secuencial)](img/Captura_de_pantalla_3.png)
+![Estimación de π vs puntos (secuencial)](img/Captura_de_pantalla3.png)
 
 ### Gráfica de precisión de π
 ![Precisión de la estimación de π](img/error_pi.png)
