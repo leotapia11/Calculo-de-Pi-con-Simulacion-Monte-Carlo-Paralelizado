@@ -1,31 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
-#include <time.h>
+#include <mpi.h>
 
-typedef struct {
-    unsigned long long points;
-    unsigned long long inside;
-    unsigned int       seed;
-} thread_data_t;
-
-static void *worker(void *arg) {
-    thread_data_t *td = arg;
-    unsigned long long in = 0;
-    for (unsigned long long i = 0; i < td->points; ++i) {
-        double x = (double)rand_r(&td->seed) / RAND_MAX * 2.0 - 1.0;
-        double y = (double)rand_r(&td->seed) / RAND_MAX * 2.0 - 1.0;
-        if (x*x + y*y <= 1.0) ++in;
-    }
-    td->inside = in;
-    return NULL;
+static double elapsed_sec(double t0, double t1) {
+    return t1 - t0;
 }
 
-static double elapsed_sec(struct timespec a, struct timespec b) {
-    return (b.tv_sec - a.tv_sec) + (b.tv_nsec - a.tv_nsec) / 1e9;
-}
+int main(int argc, char **argv) {
+    MPI_Init(&argc, &argv);
 
-int main(void) {
+    int rank, size;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
     unsigned long long totals[] = {
         10000000ULL,
         20000000ULL,
@@ -39,51 +26,47 @@ int main(void) {
     };
     int n_totals = sizeof(totals)/sizeof(*totals);
 
-    FILE *f = fopen("results.csv", "w");
-    if (!f) {
-        perror("fopen");
-        return EXIT_FAILURE;
+    if (rank == 0) {
+        printf("processes,total_points,pi_estimate,elapsed_seconds\n");
+        fflush(stdout);
     }
-    fprintf(f, "threads,total_points,pi_estimate,elapsed_seconds\n");
 
-    for (int threads = 2; threads <= 42; ++threads) {
-        for (int t = 0; t < n_totals; ++t) {
-            unsigned long long total = totals[t];
+    for (int t = 0; t < n_totals; ++t) {
+        unsigned long long total = totals[t];
 
-            pthread_t *tid = malloc(sizeof(pthread_t)*threads);
-            thread_data_t *td = malloc(sizeof(thread_data_t)*threads);
+        unsigned long long base = total / size;
+        unsigned long long rest = total % size;
+        unsigned long long local_points = base + (rank < rest ? 1 : 0);
 
-            unsigned long long base = total / threads;
-            unsigned long long rest = total % threads;
+        /* Seed per rank */
+        unsigned int seed = (unsigned int)(time(NULL) ^ (rank << 16));
 
-            for (int i = 0; i < threads; ++i) {
-                td[i].points = base + (i < rest);
-                td[i].inside = 0;
-                td[i].seed   = (unsigned)time(NULL) ^ (i << 16);
-                pthread_create(&tid[i], NULL, worker, &td[i]);
-            }
+        MPI_Barrier(MPI_COMM_WORLD);
+        double t0 = MPI_Wtime();
 
-            struct timespec start, end;
-            clock_gettime(CLOCK_MONOTONIC, &start);
+        /* Monte Carlo on local chunk */
+        unsigned long long local_inside = 0;
+        for (unsigned long long i = 0; i < local_points; ++i) {
+            double x = (double)rand_r(&seed) / RAND_MAX * 2.0 - 1.0;
+            double y = (double)rand_r(&seed) / RAND_MAX * 2.0 - 1.0;
+            if (x*x + y*y <= 1.0) ++local_inside;
+        }
 
-            unsigned long long in_total = 0;
-            for (int i = 0; i < threads; ++i) {
-                pthread_join(tid[i], NULL);
-                in_total += td[i].inside;
-            }
+        /* Reduce counts to rank 0 */
+        unsigned long long total_inside = 0;
+        MPI_Reduce(&local_inside, &total_inside, 1, MPI_UNSIGNED_LONG_LONG,
+                   MPI_SUM, 0, MPI_COMM_WORLD);
 
-            clock_gettime(CLOCK_MONOTONIC, &end);
+        double t1 = MPI_Wtime();
+        double secs = elapsed_sec(t0, t1);
 
-            double pi = 4.0 * (double)in_total / (double)total;
-            double secs = elapsed_sec(start, end);
-
-            fprintf(f, "%d,%llu,%.10f,%.6f\n", threads, total, pi, secs);
-
-            free(tid);
-            free(td);
+        if (rank == 0) {
+            double pi = 4.0 * (double)total_inside / (double)total;
+            printf("%d,%llu,%.10f,%.6f\n", size, total, pi, secs);
+            fflush(stdout);
         }
     }
 
-    fclose(f);
+    MPI_Finalize();
     return 0;
 }
