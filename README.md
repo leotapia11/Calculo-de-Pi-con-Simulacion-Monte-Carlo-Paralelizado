@@ -107,6 +107,19 @@ where:
 
 ---
 
+## Resultados
+
+### Tabla secuencial (10⁷ – 10¹⁰ puntos)
+<img src="img/secuencial_dataframe.png" alt="Resultados secuenciales" width="600"/>
+
+### Rendimiento
+| Métrica | Descripción | Imagen |
+|---------|-------------|--------|
+| **Tiempo vs Puntos** | Escalabilidad fuerte al incrementar el tamaño de la muestra. | ![Tiempo vs puntos](img/tiempo_vs_puntos.png) |
+| **Speed-up** | Aceleración lograda respecto a la versión secuencial para 2-24 procesos. | ![Speed-up](img/speedup.png) |
+| **Precisión** | Error absoluto de la estimación de π frente a la referencia. | ![Error de π](img/error_pi.png) |
+
+
 ## References
 
 - [Monte Carlo Method — Wikipedia](https://en.wikipedia.org/wiki/Monte_Carlo_method)  
